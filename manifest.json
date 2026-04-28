@@ -1,0 +1,11 @@
+{
+  "id": "031ccc48-94d6-5100-a9e0-e26c49a33319",
+  "name": "Release Importer/Exporter",
+  "overview": "Responsible for importing releases to and exporting releases from the file system near the video files.",
+  "authors": "revam",
+  "repository_url": "https://github.com/revam/dotnet-shoko-plugin-release-exporter",
+  "homepage_url": null,
+  "tags": ["release-provider", "hosted-service", "release-import", "release-export", "filesystem"],
+  "thumbnail": null,
+  "releases": []
+}
