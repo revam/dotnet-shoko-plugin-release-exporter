@@ -20,7 +20,7 @@ A [Shoko](https://shokoanime.com/) plugin that imports releases from and exports
    ```
    https://raw.githubusercontent.com/revam/dotnet-shoko-plugin-release-exporter/stable/manifest.json
    ```
-3. Go to **Server → Plugins → Browse** and find **Release Importer/Exporter**.
+3. Go to **Settings → Plugins → Browse** and find **Release Importer/Exporter**.
 4. Click **Install** on the desired version.
 5. Restart Shoko.
 
