@@ -100,7 +100,7 @@ public class ReleaseExporter : IHostedService
                     var textData = File.ReadAllText(releasePath);
                     if (string.Equals(textData, releaseInfo, StringComparison.Ordinal))
                     {
-                        _logger.LogInformation("Release info for {VideoID} already exists at {Path}", eventArgs.Video.ID, releasePath);
+                        _logger.LogInformation("Release info for {VideoID} already exists at {Path}", eventArgs.Video.LocalID, releasePath);
                         continue;
                     }
                 }
@@ -109,7 +109,7 @@ public class ReleaseExporter : IHostedService
                 if (!string.IsNullOrEmpty(releaseDirectory) && !Directory.Exists(releaseDirectory))
                     Directory.CreateDirectory(releaseDirectory);
 
-                _logger.LogInformation("Saving release info for {VideoID} at {Path}", eventArgs.Video.ID, releasePath);
+                _logger.LogInformation("Saving release info for {VideoID} at {Path}", eventArgs.Video.LocalID, releasePath);
                 File.WriteAllText(releasePath, releaseInfo);
             }
             catch (Exception ex)
@@ -143,7 +143,7 @@ public class ReleaseExporter : IHostedService
                 if (!File.Exists(releasePath))
                     continue;
 
-                _logger.LogInformation("Deleting release info for {VideoID} at {Path}", eventArgs.Video.ID, releasePath);
+                _logger.LogInformation("Deleting release info for {VideoID} at {Path}", eventArgs.Video.LocalID, releasePath);
                 File.Delete(releasePath);
 
                 var releaseDirectory = Path.GetDirectoryName(releasePath);
@@ -179,7 +179,7 @@ public class ReleaseExporter : IHostedService
         var releaseInfo = (string?)null;
         if (eventArgs.Video.ReleaseInfo is { } r)
         {
-            _logger.LogTrace("Found release info in database. (Video={VideoID})", eventArgs.Video.ID);
+            _logger.LogTrace("Found release info in database. (Video={VideoID})", eventArgs.Video.LocalID);
             releaseInfo = JsonConvert.SerializeObject(new ReleaseInfoWithProvider(r));
         }
         else
@@ -198,9 +198,9 @@ public class ReleaseExporter : IHostedService
                         if (!string.IsNullOrEmpty(newReleaseInfo))
                         {
                             if (lastUpdated is null)
-                                _logger.LogTrace("Found release info at {Path}. (Video={VideoID})", releasePath, eventArgs.Video.ID);
+                                _logger.LogTrace("Found release info at {Path}. (Video={VideoID})", releasePath, eventArgs.Video.LocalID);
                             else
-                                _logger.LogTrace("Found newer release info at {Path}. (Video={VideoID})", releasePath, eventArgs.Video.ID);
+                                _logger.LogTrace("Found newer release info at {Path}. (Video={VideoID})", releasePath, eventArgs.Video.LocalID);
 
                             lastUpdated = File.GetLastWriteTime(releasePath);
                             releaseInfo = newReleaseInfo;
@@ -209,7 +209,7 @@ public class ReleaseExporter : IHostedService
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Encountered an error reading release file: {ReleasePath} (Video={VideoID})", releasePath, eventArgs.Video.ID);
+                    _logger.LogError(ex, "Encountered an error reading release file: {ReleasePath} (Video={VideoID})", releasePath, eventArgs.Video.LocalID);
                 }
             }
         }
@@ -225,7 +225,7 @@ public class ReleaseExporter : IHostedService
                 if (!File.Exists(releasePath))
                     continue;
 
-                _logger.LogInformation("Deleting release info for {VideoID} at {Path}", eventArgs.Video.ID, releasePath);
+                _logger.LogInformation("Deleting release info for {VideoID} at {Path}", eventArgs.Video.LocalID, releasePath);
                 File.Delete(releasePath);
 
                 var releaseDirectory = Path.GetDirectoryName(releasePath);
@@ -253,7 +253,7 @@ public class ReleaseExporter : IHostedService
                     var textData = File.ReadAllText(releasePath);
                     if (string.Equals(textData, releaseInfo, StringComparison.Ordinal))
                     {
-                        _logger.LogInformation("Release info for {VideoID} already exists at {Path}", eventArgs.Video.ID, releasePath);
+                        _logger.LogInformation("Release info for {VideoID} already exists at {Path}", eventArgs.Video.LocalID, releasePath);
                         continue;
                     }
                 }
@@ -262,7 +262,7 @@ public class ReleaseExporter : IHostedService
                 if (!string.IsNullOrEmpty(releaseDirectory) && !Directory.Exists(releaseDirectory))
                     Directory.CreateDirectory(releaseDirectory);
 
-                _logger.LogInformation("Saving release info for {VideoID} at {Path}", eventArgs.Video.ID, releasePath);
+                _logger.LogInformation("Saving release info for {VideoID} at {Path}", eventArgs.Video.LocalID, releasePath);
                 File.WriteAllText(releasePath, releaseInfo);
             }
             catch (Exception ex)
@@ -290,7 +290,7 @@ public class ReleaseExporter : IHostedService
             "Found {Count} release files to remove for video file at {Path} (Video={VideoID},ManagedFolder={ManagedFolder},RelativePath={RelativePath})",
             pathsToRemove.Count,
             eventArgs.File.Path,
-            eventArgs.Video.ID,
+            eventArgs.Video.LocalID,
             eventArgs.File.ManagedFolder,
             eventArgs.File.RelativePath
         );
@@ -305,7 +305,7 @@ public class ReleaseExporter : IHostedService
                 if (!File.Exists(releasePath))
                     continue;
 
-                _logger.LogInformation("Deleting release info for {VideoID} at {Path}", eventArgs.Video.ID, releasePath);
+                _logger.LogInformation("Deleting release info for {VideoID} at {Path}", eventArgs.Video.LocalID, releasePath);
                 File.Delete(releasePath);
 
                 var releaseDirectory = Path.GetDirectoryName(releasePath);
@@ -372,7 +372,7 @@ public class ReleaseExporter : IHostedService
                             var textData = File.ReadAllText(releasePath);
                             if (string.Equals(textData, serializedReleaseInfo, StringComparison.Ordinal))
                             {
-                                _logger.LogTrace("Release info for {VideoID} already exists at {Path}", video.ID, releasePath);
+                                _logger.LogTrace("Release info for {VideoID} already exists at {Path}", video.LocalID, releasePath);
                                 totalSkipped++;
                                 continue;
                             }
@@ -383,7 +383,7 @@ public class ReleaseExporter : IHostedService
                             Directory.CreateDirectory(releaseDirectory);
 
                         File.WriteAllText(releasePath, serializedReleaseInfo);
-                        _logger.LogInformation("Saved release info for {VideoID} at {Path}", video.ID, releasePath);
+                        _logger.LogInformation("Saved release info for {VideoID} at {Path}", video.LocalID, releasePath);
                         totalExported++;
                     }
                     catch (IOException ex) when (ex.Message.StartsWith("Read-only file system", StringComparison.InvariantCultureIgnoreCase))
@@ -463,7 +463,7 @@ public class ReleaseExporter : IHostedService
                         }
 
                         File.Delete(releasePath);
-                        _logger.LogInformation("Deleted release info for {VideoID} at {Path}", video.ID, releasePath);
+                        _logger.LogInformation("Deleted release info for {VideoID} at {Path}", video.LocalID, releasePath);
                         totalDeleted++;
 
                         var releaseDirectory = Path.GetDirectoryName(releasePath);
