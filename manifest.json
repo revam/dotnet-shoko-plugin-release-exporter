@@ -14,6 +14,22 @@
   ],
   "releases": [
     {
+      "version": "1.0.2",
+      "tag": "v1.0.2",
+      "released_at": "2026-09-30T16:38:18.857572Z",
+      "channel": "Stable",
+      "release_notes": "Importing release files now works: every import failed and was logged as an error. Files exported by older versions, which keep the AniDB IDs directly on each cross-reference, are read as well, and a file with no usable cross-reference is skipped so the next release provider gets the video. Rebuilt against the abstractions \u00606.0.0-alpha.95\u0060 release.\n\nRequires Shoko Server with abstractions \u00606.0.0-alpha.95\u0060.",
+      "dependencies": [],
+      "archives": [
+        {
+          "runtime": "any",
+          "abstraction": "6.0.0",
+          "url": "https://github.com/revam/dotnet-shoko-plugin-release-exporter/releases/download/v1.0.2/ReleaseExporter-v1.0.2-any.zip",
+          "checksum": "sha256:329f7eabe8c64800837ab0e4876f11f532de32f180ca7938d712a076fe527f6d"
+        }
+      ]
+    },
+    {
       "version": "1.0.1",
       "tag": "v1.0.1",
       "released_at": "2026-09-18T04:41:20.4464876Z",
