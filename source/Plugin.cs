@@ -22,6 +22,12 @@ public class Plugin : IPlugin, IPluginServiceRegistration
         file system near the video files.
     """;
 
+    /// <inheritdoc/>
+    public string? EmbeddedThumbnailResourceName => "Shoko.Plugin.ReleaseExporter.Assets.thumbnail.svg";
+
+    /// <inheritdoc/>
+    public string? EmbeddedIconResourceName => "Shoko.Plugin.ReleaseExporter.Assets.icon.svg";
+
     /// <inheritdoc />
     public static void RegisterServices(IServiceCollection serviceCollection, IApplicationPaths applicationPaths)
     {
