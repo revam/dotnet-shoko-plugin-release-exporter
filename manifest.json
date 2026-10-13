@@ -12,9 +12,23 @@
     "release-export",
     "filesystem"
   ],
-  "thumbnail_url": "https://raw.githubusercontent.com/revam/dotnet-shoko-plugin-release-exporter/stable/source/Assets/thumbnail.svg",
-  "icon_url": "https://raw.githubusercontent.com/revam/dotnet-shoko-plugin-release-exporter/stable/source/Assets/icon.svg",
   "releases": [
+    {
+      "version": "1.0.6",
+      "tag": "v1.0.6",
+      "released_at": "2026-10-13T23:51:02.3359858Z",
+      "channel": "Stable",
+      "release_notes": "Added a thumbnail and an icon for the plugin. Nothing else changed.\n\nRequires Shoko Server with abstractions \u00606.0.0-alpha.104\u0060.",
+      "dependencies": [],
+      "archives": [
+        {
+          "runtime": "any",
+          "abstraction": "6.0.0",
+          "url": "https://github.com/revam/dotnet-shoko-plugin-release-exporter/releases/download/v1.0.6/ReleaseExporter-v1.0.6-any.zip",
+          "checksum": "sha256:8a18c271f5ff772b6fed87224b5105b33ada4aee02d7827c5f84d2daa507d3c2"
+        }
+      ]
+    },
     {
       "version": "1.0.5",
       "tag": "v1.0.5",
@@ -110,5 +124,7 @@
         }
       ]
     }
-  ]
+  ],
+  "thumbnail_url": "https://raw.githubusercontent.com/revam/dotnet-shoko-plugin-release-exporter/stable/source/Assets/thumbnail.svg",
+  "icon_url": "https://raw.githubusercontent.com/revam/dotnet-shoko-plugin-release-exporter/stable/source/Assets/icon.svg"
 }
