@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Shoko.Abstractions.Config;
-using Shoko.Abstractions.Config.Enums;
+using Shoko.Abstractions.UI.Enums;
 using Shoko.Abstractions.Plugin;
 using Shoko.Abstractions.Video.Events;
 using Shoko.Abstractions.Video.Release;
