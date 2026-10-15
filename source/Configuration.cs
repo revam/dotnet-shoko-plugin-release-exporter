@@ -15,7 +15,7 @@ namespace Shoko.Plugin.ReleaseExporter;
 /// Configure how the import/export functionality works.
 /// </summary>
 [Display(Name = "Release Importer/Exporter")]
-public class Configuration : IReleaseInfoProviderConfiguration, IConfigurationWithMigrations
+public class Configuration : IReleaseInfoProviderConfiguration, IPluginConfiguration, IConfigurationWithMigrations
 {
     /// <inheritdoc/>
     public static string ApplyMigrations(string config, IApplicationPaths applicationPaths)

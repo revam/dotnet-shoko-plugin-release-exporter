@@ -8,7 +8,7 @@ namespace Shoko.Plugin.ReleaseExporter;
 /// Plugin responsible for importing releases to and exporting releases from the
 /// file system near the video files.
 /// </summary>
-public class Plugin : IPlugin, IPluginServiceRegistration
+public class Plugin : IPlugin<Configuration>, IPluginServiceRegistration
 {
     /// <inheritdoc/>
     public Guid ID { get; private init; } = new("031ccc48-94d6-5100-a9e0-e26c49a33319");
