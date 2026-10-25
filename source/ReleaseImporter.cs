@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -8,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Shoko.Abstractions.Config;
 using Shoko.Abstractions.Extensions;
+using Shoko.Abstractions.Metadata;
 using Shoko.Abstractions.Plugin;
 using Shoko.Abstractions.Video.Release;
 
@@ -80,14 +82,16 @@ public class ReleaseImporter(ILogger<ReleaseImporter> logger, IApplicationPaths 
     /// <summary>
     /// Reads an exported release file. Read as a plain <see cref="ReleaseInfo"/>, since
     /// <see cref="ReleaseInfoWithProvider"/> has no constructor Newtonsoft.Json can use.
-    /// Files exported before the cross-references moved to <c>ProviderIDs</c> keep their
-    /// AniDB IDs at the top of each cross-reference; those are moved over, and any
-    /// cross-reference left without an ID is dropped.
+    /// Cross-references name their entries in <c>IDs</c>. Files exported by older versions
+    /// keep AniDB IDs instead, either in <c>ProviderIDs</c> (<c>AniDB_Episode</c> and
+    /// <c>AniDB_Anime</c>) or at the top of each cross-reference (<c>AnidbEpisodeID</c> and
+    /// <c>AnidbAnimeID</c>); those are moved over, and any cross-reference left without an
+    /// ID is dropped.
     /// </summary>
     /// <param name="textData">The file contents.</param>
     /// <returns>The release, or <c>null</c> if the file holds no JSON object.</returns>
     /// <exception cref="JsonException">The file is not valid JSON, or does not match the release shape.</exception>
-    private static ReleaseInfo? ReadReleaseFile(string textData)
+    internal static ReleaseInfo? ReadReleaseFile(string textData)
     {
         if (JToken.Parse(textData) is not JObject json || json.ToObject<ReleaseInfo>() is not { } releaseInfo)
             return null;
@@ -97,15 +101,20 @@ public class ReleaseImporter(ILogger<ReleaseImporter> logger, IApplicationPaths 
             for (var index = 0; index < rawCrossReferences.Count && index < releaseInfo.CrossReferences.Count; index++)
             {
                 var crossReference = releaseInfo.CrossReferences[index];
-                if (crossReference.ProviderIDs.Count > 0 || rawCrossReferences[index] is not JObject rawCrossReference)
+                if (crossReference.IDs.Count > 0 || rawCrossReferences[index] is not JObject rawCrossReference)
                     continue;
 
-                crossReference.AnidbEpisodeID = rawCrossReference.Value<int?>("AnidbEpisodeID") ?? 0;
-                crossReference.AnidbAnimeID = rawCrossReference.Value<int?>("AnidbAnimeID");
+                var legacyIDs = rawCrossReference["ProviderIDs"] as JObject ?? rawCrossReference;
+                var episodeID = legacyIDs.Value<int?>("AniDB_Episode") ?? legacyIDs.Value<int?>("AnidbEpisodeID") ?? 0;
+                var animeID = legacyIDs.Value<int?>("AniDB_Anime") ?? legacyIDs.Value<int?>("AnidbAnimeID") ?? 0;
+                if (episodeID > 0)
+                    crossReference.IDs = ReleaseVideoCrossReference.ForAniDB(episodeID, animeID > 0 ? animeID : null).IDs;
+                else if (animeID > 0)
+                    crossReference.IDs = [new(MetadataSource.AniDB, MetadataEntityType.Series, animeID.ToString(CultureInfo.InvariantCulture))];
             }
         }
 
-        releaseInfo.CrossReferences.RemoveAll(crossReference => crossReference.ProviderIDs.Count < 1);
+        releaseInfo.CrossReferences.RemoveAll(crossReference => crossReference.IDs.Count < 1);
         return releaseInfo;
     }
 
