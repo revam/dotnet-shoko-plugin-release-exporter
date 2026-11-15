@@ -12,7 +12,29 @@
     "release-export",
     "filesystem"
   ],
+  "thumbnail_url": "https://raw.githubusercontent.com/revam/dotnet-shoko-plugin-release-exporter/stable/source/Assets/thumbnail.svg",
+  "icon_url": "https://raw.githubusercontent.com/revam/dotnet-shoko-plugin-release-exporter/stable/source/Assets/icon.svg",
+  "is_meta": false,
   "releases": [
+    {
+      "version": "1.1.2",
+      "tag": "v1.1.2",
+      "released_at": "2026-11-15T00:59:43.7270097Z",
+      "channel": "Stable",
+      "release_notes": "Rebuilt against the abstractions \u00606.0.0-alpha.131\u0060 release, where release cross-references name their entries in \u0060IDs\u0060. Release files exported by older versions still import.\n\nRequires Shoko Server with abstractions \u00606.0.0-alpha.131\u0060.",
+      "is_meta": false,
+      "dependencies": [],
+      "archives": [
+        {
+          "runtime": "any",
+          "abstraction": "6.0.0",
+          "url": "https://github.com/revam/dotnet-shoko-plugin-release-exporter/releases/download/v1.1.2/ReleaseExporter-v1.1.2-any.zip",
+          "checksum": "sha256:ba96577c97294b18a4d3d8516248363a004c862bcae144ff33b6291f1eed7b12",
+          "packed_size": 40878,
+          "unpacked_size": 92747
+        }
+      ]
+    },
     {
       "version": "1.1.1",
       "tag": "v1.1.1",
@@ -156,7 +178,5 @@
         }
       ]
     }
-  ],
-  "thumbnail_url": "https://raw.githubusercontent.com/revam/dotnet-shoko-plugin-release-exporter/stable/source/Assets/thumbnail.svg",
-  "icon_url": "https://raw.githubusercontent.com/revam/dotnet-shoko-plugin-release-exporter/stable/source/Assets/icon.svg"
+  ]
 }
